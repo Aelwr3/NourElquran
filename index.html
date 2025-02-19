@@ -1,48 +1,68 @@
-<!DOCTYPE html><html lang="ar">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مرحبًا بك</title>
+    <title>عاهدتُ القرآن - الترحيب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            margin: 0;
-            padding: 0;
             background: url('/mnt/data/file-9htRApYpsEN2P6sDfiAFMU') no-repeat center center fixed;
             background-size: cover;
+            color: #4A3600;
             font-family: 'Amiri', serif;
             text-align: center;
-            color: white;
-        }
-        .welcome-container {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-direction: column;
+            margin: 0;
         }
-        .welcome-title {
-            font-size: 3rem;
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #B88A00;
+            text-shadow: 2px 2px 5px rgba(184, 138, 0, 0.5);
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 20px;
             margin-bottom: 20px;
+            color: #5A4500;
         }
-        .welcome-btn {
-            padding: 10px 20px;
-            font-size: 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
+        button {
+            background: linear-gradient(to right, #FFD700, #B8860B);
+            color: #FFFFFF;
+            font-size: 22px;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: bold;
             border: none;
-            color: white;
+            padding: 12px 24px;
+            border-radius: 15px;
             cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .welcome-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
         }
     </style>
 </head>
 <body>
-    <div class="welcome-container">
-        <h1 class="welcome-title">مرحبًا بك في موقعنا</h1>
-        <button class="welcome-btn" onclick="location.href='home.html'">ابدأ</button>
-    </div>
+    <div class="container">
+        <h1>✨ عاهدتُ القرآن ✨</h1>
+        <p>ابدأ رحلتك الروحانية لختم القرآن الكريم بتنظيم وقتك والتزامك.</p>
+        <button id="startBtn" onclick="startJourney()">📖 ابدأ الآن</button>
+    </div><script>
+    function startJourney() {
+        window.location.href = "register.html";
+    }
+</script>
+
 </body>
 </html>
