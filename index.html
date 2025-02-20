@@ -1,68 +1,76 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عاهدتُ القرآن - الترحيب</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <title>✨ عاهدتُ القرآن ✨</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
+
         body {
-            background: url('/mnt/data/file-9htRApYpsEN2P6sDfiAFMU') no-repeat center center fixed;
-            background-size: cover;
-            color: #4A3600;
-            font-family: 'Amiri', serif;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: 'Amiri', serif;
+            background: linear-gradient(to bottom, #002b4d, #004c6d);
+            color: white;
+            position: relative;
+            overflow: hidden;
         }
-        .container {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+        /* إضافة زخرفة ذهبية مماثلة */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.ibb.co/YQwB9xW/mandala-pattern.png') no-repeat top right / 40%;
+            opacity: 0.5;
+            pointer-events: none;
         }
+
         h1 {
-            font-size: 36px;
-            font-weight: bold;
-            color: #B88A00;
-            text-shadow: 2px 2px 5px rgba(184, 138, 0, 0.5);
+            font-size: 2em;
             margin-bottom: 10px;
         }
+
         p {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #5A4500;
+            font-size: 1.2em;
         }
+
         button {
-            background: linear-gradient(to right, #FFD700, #B8860B);
-            color: #FFFFFF;
-            font-size: 22px;
-            font-family: 'Tajawal', sans-serif;
-            font-weight: bold;
+            background-color: gold;
+            color: black;
+            font-size: 1.2em;
+            padding: 10px 20px;
             border: none;
-            padding: 12px 24px;
-            border-radius: 15px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 10px;
+            transition: 0.3s;
         }
+
         button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+            background-color: darkgoldenrod;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div>
         <h1>✨ عاهدتُ القرآن ✨</h1>
         <p>ابدأ رحلتك الروحانية لختم القرآن الكريم بتنظيم وقتك والتزامك.</p>
-        <button id="startBtn" onclick="startJourney()">📖 ابدأ الآن</button>
-    </div><script>
-    function startJourney() {
-        window.location.href = "register.html";
-    }
-</script>
+        <button onclick="startJourney()">📖 ابدأ الآن</button>
+    </div>
 
+    <script>
+        function startJourney() {
+            window.location.href = "register.html";
+        }
+    </script>
 </body>
 </html>
