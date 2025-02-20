@@ -1,63 +1,97 @@
-<!DOCTYPE html>
-<html lang="ar">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ عاهدتُ القرآن ✨</title>
+    <title>عاهدتُ القرآن - الترحيب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-image: url('https://i.ibb.co/5hvqZcg/background.jpg');
+            background: url('https://i.ibb.co/5hvqZcgZ/background.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            text-align: center;
+            color: #4A3600;
             font-family: 'Amiri', serif;
-            color: white;
+            text-align: center;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
+            position: relative;
         }
-
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            display: grid;
+            place-items: center;
+        }
         h1 {
-            font-size: 2rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 36px;
+            font-weight: bold;
+            color: #B88A00;
+            text-shadow: 2px 2px 5px rgba(184, 138, 0, 0.5);
+            margin-bottom: 10px;
         }
-
         p {
-            font-size: 1.2rem;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #5A4500;
         }
-
         button {
-            background-color: #d4af37;
-            color: white;
+            background: linear-gradient(to right, #FFD700, #B8860B);
+            color: #FFFFFF;
+            font-size: 22px;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: bold;
             border: none;
-            padding: 10px 20px;
-            font-size: 1.2rem;
+            padding: 12px 24px;
+            border-radius: 15px;
             cursor: pointer;
-            border-radius: 5px;
-            margin-top: 20px;
-            transition: 0.3s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-
         button:hover {
-            background-color: #b5942d;
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
         }
-    </style>
+        .icons img {
+            position: absolute;
+            width: 50px;
+            opacity: 0.6;
+            animation: float 3s infinite ease-in-out alternate;
+        }
+        .icons img:nth-child(1) { top: 10%; left: 20%; animation-duration: 4s; }
+        .icons img:nth-child(2) { top: 30%; right: 15%; animation-duration: 5s; }
+        .icons img:nth-child(3) { bottom: 20%; left: 10%; animation-duration: 3.5s; }
+        .icons img:nth-child(4) { bottom: 30%; right: 25%; animation-duration: 4.5s; }
+        .icons img:nth-child(5) { top: 50%; left: 50%; animation-duration: 6s; }
+        .icons img:nth-child(6) { bottom: 50%; right: 40%; animation-duration: 5.5s; }@keyframes float {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(15px); }
+    }
+</style>
+
 </head>
 <body>
-
-    <h1>✨ عاهدتُ القرآن ✨</h1>
-    <p>ابدأ رحلتك الروحانية لختم القرآن الكريم بتنظيم وقتك والتزامك.</p>
-    <button onclick="startJourney()">📖 ابدأ الآن</button>
-
+    <div class="icons">
+        <img src="https://cdn-icons-png.flaticon.com/128/15586/15586721.png" alt="Islam Icon">
+        <img src="https://cdn-icons-png.flaticon.com/128/10180/10180643.png" alt="Pray Icon">
+        <img src="https://cdn-icons-png.flaticon.com/128/10180/10180697.png" alt="Sajadah Icon">
+        <img src="https://cdn-icons-png.flaticon.com/128/18970/18970917.png" alt="Mosque Icon">
+        <img src="https://cdn-icons-png.flaticon.com/128/10180/10180675.png" alt="Quran Icon">
+        <img src="https://cdn-icons-png.flaticon.com/128/18970/18970857.png" alt="Prayer Mat Icon">
+    </div>
+    <div class="container">
+        <h1>✨ عاهدتُ القرآن ✨</h1>
+        <p>ابدأ رحلتك الروحانية لختم القرآن الكريم بتنظيم وقتك والتزامك.</p>
+        <button id="startBtn" onclick="startJourney()">📖 ابدأ الآن</button>
+    </div>
     <script>
         function startJourney() {
             window.location.href = "register.html";
         }
     </script>
-
 </body>
 </html>
