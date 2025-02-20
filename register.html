@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التسجيل - عاهدتُ القرآن</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #002b4d, #004c6d);
+            color: #ffffff;
+            font-family: 'Amiri', serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            width: 300px;
+        }
+        h1 {
+            font-size: 32px;
+            color: #FFD700;
+            text-shadow: 2px 2px 5px rgba(255, 215, 0, 0.5);
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            font-size: 18px;
+            text-align: center;
+        }
+        button {
+            background: linear-gradient(to right, #FFD700, #B8860B);
+            color: white;
+            font-size: 20px;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+        }
+        .icon {
+            position: absolute;
+            width: 50px;
+            opacity: 0.4;
+        }
+        .icon1 { top: 10%; left: 20%; animation: float 5s infinite ease-in-out; }
+        .icon2 { top: 70%; left: 80%; animation: float 7s infinite ease-in-out; }
+        .icon3 { top: 50%; left: 10%; animation: float 6s infinite ease-in-out; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <img src="https://cdn-icons-png.flaticon.com/128/15586/15586721.png" class="icon icon1">
+    <img src="https://cdn-icons-png.flaticon.com/128/10180/10180643.png" class="icon icon2">
+    <img src="https://cdn-icons-png.flaticon.com/128/10180/10180697.png" class="icon icon3">
+    <div class="container">
+        <h1>📜 تسجيل الدخول</h1>
+        <input type="text" placeholder="الاسم الكامل" required>
+        <input type="text" placeholder="البلد" required>
+        <button onclick="registerUser()">✅ تسجيل</button>
+    </div>
+    <script>
+        function registerUser() {
+            window.location.href = "dashboard.html";
+        }
+    </script>
+</body>
+</html>
