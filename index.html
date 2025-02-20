@@ -6,8 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: url('https://i.ibb.co/5hvqZcgZ/background.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background: linear-gradient(to bottom, #002b4d, #004c6d);
             color: #4A3600;
             font-family: 'Amiri', serif;
             text-align: center;
@@ -17,81 +16,89 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            position: relative;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            display: grid;
-            place-items: center;
-        }
-        h1 {
-            font-size: 36px;
-            font-weight: bold;
-            color: #B88A00;
-            text-shadow: 2px 2px 5px rgba(184, 138, 0, 0.5);
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #5A4500;
-        }
-        button {
-            background: linear-gradient(to right, #FFD700, #B8860B);
-            color: #FFFFFF;
-            font-size: 22px;
-            font-family: 'Tajawal', sans-serif;
-            font-weight: bold;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
-        }
-        .icons img {
-            position: absolute;
-            width: 50px;
-            opacity: 0.6;
-            animation: float 3s infinite ease-in-out alternate;
-        }
-        .icons img:nth-child(1) { top: 10%; left: 20%; animation-duration: 4s; }
-        .icons img:nth-child(2) { top: 30%; right: 15%; animation-duration: 5s; }
-        .icons img:nth-child(3) { bottom: 20%; left: 10%; animation-duration: 3.5s; }
-        .icons img:nth-child(4) { bottom: 30%; right: 25%; animation-duration: 4.5s; }
-        .icons img:nth-child(5) { top: 50%; left: 50%; animation-duration: 6s; }
-        .icons img:nth-child(6) { bottom: 50%; right: 40%; animation-duration: 5.5s; }@keyframes float {
-        0% { transform: translateY(0); }
-        100% { transform: translateY(15px); }
+        }.icons-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 20px;
+        pointer-events: none;
+    }
+
+    .icon {
+        width: 80px;
+        height: 80px;
+        opacity: 0.4;
+        animation: float 5s infinite alternate ease-in-out;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        100% { transform: translateY(20px); }
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+    
+    h1 {
+        font-size: 36px;
+        font-weight: bold;
+        color: #FFD700;
+        text-shadow: 2px 2px 5px rgba(255, 215, 0, 0.5);
+        margin-bottom: 10px;
+    }
+    
+    p {
+        font-size: 20px;
+        margin-bottom: 20px;
+        color: #FFF;
+    }
+    
+    button {
+        background: linear-gradient(to right, #FFD700, #B8860B);
+        color: #FFFFFF;
+        font-size: 22px;
+        font-family: 'Tajawal', sans-serif;
+        font-weight: bold;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
     }
 </style>
 
 </head>
 <body>
-    <div class="icons">
-        <img src="https://cdn-icons-png.flaticon.com/128/15586/15586721.png" alt="Islam Icon">
-        <img src="https://cdn-icons-png.flaticon.com/128/10180/10180643.png" alt="Pray Icon">
-        <img src="https://cdn-icons-png.flaticon.com/128/10180/10180697.png" alt="Sajadah Icon">
-        <img src="https://cdn-icons-png.flaticon.com/128/18970/18970917.png" alt="Mosque Icon">
-        <img src="https://cdn-icons-png.flaticon.com/128/10180/10180675.png" alt="Quran Icon">
-        <img src="https://cdn-icons-png.flaticon.com/128/18970/18970857.png" alt="Prayer Mat Icon">
-    </div>
-    <div class="container">
-        <h1>✨ عاهدتُ القرآن ✨</h1>
-        <p>ابدأ رحلتك الروحانية لختم القرآن الكريم بتنظيم وقتك والتزامك.</p>
-        <button id="startBtn" onclick="startJourney()">📖 ابدأ الآن</button>
-    </div>
-    <script>
-        function startJourney() {
-            window.location.href = "register.html";
-        }
-    </script>
+    <div class="icons-container">
+        <img src="https://cdn-icons-png.flaticon.com/512/10180/10180643.png" class="icon" style="grid-column: 1; grid-row: 1;">
+        <img src="https://cdn-icons-png.flaticon.com/512/10180/10180697.png" class="icon" style="grid-column: 3; grid-row: 1;">
+        <img src="https://cdn-icons-png.flaticon.com/512/18970/18970917.png" class="icon" style="grid-column: 2; grid-row: 2;">
+        <img src="https://cdn-icons-png.flaticon.com/512/10180/10180675.png" class="icon" style="grid-column: 1; grid-row: 3;">
+        <img src="https://cdn-icons-png.flaticon.com/512/18970/18970857.png" class="icon" style="grid-column: 3; grid-row: 3;">
+    </div><div class="container">
+    <h1>✨ عاهدتُ القرآن ✨</h1>
+    <p>ابدأ رحلتك الروحانية لختم القرآن الكريم بتنظيم وقتك والتزامك.</p>
+    <button id="startBtn" onclick="startJourney()">📖 ابدأ الآن</button>
+</div>
+
+<script>
+    function startJourney() {
+        window.location.href = "register.html";
+    }
+</script>
+
 </body>
-</html>
+</html>،، 
