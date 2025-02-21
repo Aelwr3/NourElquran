@@ -1,104 +1,196 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عاهدتُ القرآن - الترحيب</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <title>عاهدتُ القرآن - البداية</title>
+    
+    <!-- الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
-        body {
-            background: linear-gradient(to bottom, #002b4d, #004c6d);
-            color: #4A3600;
-            font-family: 'Amiri', serif;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        /* أنماط CSS */
+        * {
             margin: 0;
-            overflow: hidden;
-        }.icons-container {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-        gap: 20px;
-        pointer-events: none;
-    }
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Amiri', serif;
+        }
 
-    .icon {
-        width: 80px;
-        height: 80px;
-        opacity: 0.4;
-        animation: float 5s infinite alternate ease-in-out;
-    }
+        body {
+            background: #f0f4f8;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        100% { transform: translateY(20px); }
-    }
+        .background-pattern {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+            opacity: 0.1;
+            z-index: -1;
+        }
 
-    .container {
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    }
-    
-    h1 {
-        font-size: 36px;
-        font-weight: bold;
-        color: #FFD700;
-        text-shadow: 2px 2px 5px rgba(255, 215, 0, 0.5);
-        margin-bottom: 10px;
-    }
-    
-    p {
-        font-size: 20px;
-        margin-bottom: 20px;
-        color: #FFF;
-    }
-    
-    button {
-        background: linear-gradient(to right, #FFD700, #B8860B);
-        color: #FFFFFF;
-        font-size: 22px;
-        font-family: 'Tajawal', sans-serif;
-        font-weight: bold;
-        border: none;
-        padding: 12px 24px;
-        border-radius: 15px;
-        cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-    
-    button:hover {
-        transform: scale(1.1);
-        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
-    }
-</style>
+        .container {
+            padding: 20px;
+        }
 
+        .title {
+            text-align: center;
+            color: #2c5d2c;
+            font-size: 2.5rem;
+            margin: 2rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-card {
+            background: white;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid #e8e8e8;
+            animation: zoomIn 0.8s ease;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo i {
+            font-size: 4rem;
+            color: #d4af37;
+            animation: pulse 2s infinite;
+        }
+
+        .description .text {
+            font-size: 1.4rem;
+            line-height: 2.5rem;
+            color: #444;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #2c5d2c, #3a7d3a);
+            color: white !important;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 0 auto;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(44, 93, 44, 0.3);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.8rem;
+                padding: 0 1rem;
+            }
+            .hero-card {
+                margin: 1rem;
+                padding: 2rem;
+            }
+            .description .text {
+                font-size: 1.1rem;
+                line-height: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="icons-container">
-        <img src="https://cdn-icons-png.flaticon.com/512/10180/10180643.png" class="icon" style="grid-column: 1; grid-row: 1;">
-        <img src="https://cdn-icons-png.flaticon.com/512/10180/10180697.png" class="icon" style="grid-column: 3; grid-row: 1;">
-        <img src="https://cdn-icons-png.flaticon.com/512/18970/18970917.png" class="icon" style="grid-column: 2; grid-row: 2;">
-        <img src="https://cdn-icons-png.flaticon.com/512/10180/10180675.png" class="icon" style="grid-column: 1; grid-row: 3;">
-        <img src="https://cdn-icons-png.flaticon.com/512/18970/18970857.png" class="icon" style="grid-column: 3; grid-row: 3;">
-    </div><div class="container">
-    <h1>✨ عاهدتُ القرآن ✨</h1>
-    <p>ابدأ رحلتك الروحانية لختم القرآن الكريم بتنظيم وقتك والتزامك.</p>
-    <button id="startBtn" onclick="startJourney()">📖 ابدأ الآن</button>
-</div>
+    <div class="background-pattern"></div>
+    
+    <main class="container">
+        <h1 class="title">﴿ وَإِنَّكَ لَتُلَقَّى الْقُرْآنَ مِن لَّدُنْ حَكِيمٍ عَلِيمٍ ﴾</h1>
+        
+        <div class="hero-card">
+            <div class="logo">
+                <i class="fas fa-quran"></i>
+            </div>
+            
+            <div class="description">
+                <p class="text">
+                    أهلًا بك في رحلتك مع كلام الله! 
+                    <br>
+                    سجل تقدمك في ختم القرآن، احصل على شهادات تقديرية،
+                    <br>
+                    واستمتع بتجربة روحانية فريدة.
+                </p>
+            </div>
+            
+            <button class="start-btn" onclick="openRegistration()">
+                ابدأ الرحلة الآن
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+    </main>
 
-<script>
-    function startJourney() {
-        window.location.href = "register.html";
-    }
-</script>
+    <!-- المكتبات -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        // الوظائف JavaScript
+        function openRegistration() {
+            Swal.fire({
+                title: 'جاري التحميل...',
+                html: '<div style="font-size: 1.2rem;">الاستعداد لرحلة روحانية ﴾</div>',
+                timerProgressBar: true,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
 
+            setTimeout(() => {
+                window.location.href = "register.html";
+            }, 1500);
+        }
+    </script>
 </body>
 </html>
