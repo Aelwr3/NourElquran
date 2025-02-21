@@ -391,6 +391,178 @@
                 isValid = false;
             }
         });
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل مستخدم جديد - عاهدتُ القرآن</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #16a085;
+            --background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            --text-color: #ecf0f1;
+        }body {
+        background: var(--background);
+        font-family: 'Amiri', serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        color: var(--text-color);
+    }
+
+    .registration-container {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        width: 90%;
+        max-width: 500px;
+        backdrop-filter: blur(10px);
+        text-align: center;
+    }
+
+    .header {
+        margin-bottom: 1.5rem;
+    }
+
+    .logo {
+        font-size: 3rem;
+        color: var(--secondary-color);
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    .input-group {
+        margin-bottom: 1.5rem;
+        text-align: right;
+        position: relative;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.2);
+        color: var(--text-color);
+    }
+
+    input:focus, select:focus {
+        border-color: var(--secondary-color);
+        outline: none;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 15px;
+        background: var(--secondary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .submit-btn:disabled {
+        background: #555;
+        cursor: not-allowed;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+        transform: scale(1.05);
+    }
+
+    .error-message {
+        color: #e74c3c;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none;
+    }
+</style>
+
+</head>
+<body>
+    <div class="registration-container">
+        <div class="header">
+            <i class="fas fa-quran logo"></i>
+            <h1>سجل نفسك لبدء الختمة</h1>
+        </div><form id="registrationForm">
+        <div class="input-group">
+            <label for="name">الاسم الكامل</label>
+            <input type="text" id="name" required>
+            <span class="error-message">يجب إدخال الاسم</span>
+        </div>
+
+        <div class="input-group">
+            <label for="country">الدولة</label>
+            <select id="country" required>
+                <option value="">اختر دولتك</option>
+            </select>
+            <span class="error-message">يجب اختيار الدولة</span>
+        </div>
+
+        <div class="input-group">
+            <label for="email">البريد الإلكتروني (اختياري)</label>
+            <input type="email" id="email">
+        </div>
+
+        <button type="submit" class="submit-btn" disabled>
+            <i class="fas fa-user-plus"></i> إنشاء الحساب
+        </button>
+    </form>
+</div>
+
+<script>
+    const arabCountries = [
+        "السعودية", "مصر", "الإمارات", "الجزائر", "البحرين",
+        "العراق", "الأردن", "الكويت", "لبنان", "ليبيا",
+        "المغرب", "عُمان", "فلسطين", "قطر", "السودان",
+        "سوريا", "تونس", "اليمن", "الصومال", "موريتانيا"
+    ];
+
+    const countrySelect = document.getElementById('country');
+    arabCountries.forEach(country => {
+        const option = document.createElement('option');
+        option.value = country;
+        option.textContent = country;
+        countrySelect.appendChild(option);
+    });
+
+    const form = document.getElementById('registrationForm');
+    const inputs = form.querySelectorAll('input, select');
+    const submitBtn = form.querySelector('.submit-btn');
+
+    function checkValidity() {
+        let isValid = true;
+        inputs.forEach(input => {
+            if (input.required && !input.value.trim()) {
+                isValid = false;
+                input.closest('.input-group').classList.add('invalid');
+            } else {
+                input.closest('.input-group').classList.remove('invalid');
+            }
+        });
         submitBtn.disabled = !isValid;
     }
 
@@ -401,9 +573,7 @@
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        messageBox.textContent = "تم التسجيل بنجاح!";
-        messageBox.className = "message-box success-message";
-        messageBox.style.display = "block";
+        console.log('تم التسجيل بنجاح!');
         form.reset();
         submitBtn.disabled = true;
     });
