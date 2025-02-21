@@ -1,234 +1,19 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل مستخدم جديد - عاهدتُ القرآن</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary-color: #2c5f2d;
-            --secondary-color: #97bc62;
-            --background: #f5f5f5;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--background) 0%, #e0e0e0 100%);
-            font-family: 'Cairo', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-        }
-
-        .registration-container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 500px;
-            backdrop-filter: blur(10px);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .logo {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        input, .custom-select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        input:focus, .custom-select:hover {
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 8px rgba(151, 188, 98, 0.2);
-            outline: none;
-        }
-
-        .custom-select {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .custom-select select {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background: transparent;
-            cursor: pointer;
-        }
-
-        .custom-arrow {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary-color);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .submit-btn:disabled {
-            background: #ddd;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        .submit-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(44, 95, 45, 0.3);
-        }
-
-        .error-message {
-            color: #e74c3c;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .input-group.invalid .error-message {
-            display: block;
-        }
-
-        .input-group.invalid input,
-        .input-group.invalid .custom-select {
-            border-color: #e74c3c;
-        }
-    </style>
-</head>
-<body>
-    <div class="registration-container">
-        <div class="header">
-            <i class="fas fa-quran logo"></i>
-            <h1>سجل نفسك لبدء الختمة</h1>
-        </div>
-
-        <form id="registrationForm">
-            <div class="input-group">
-                <label for="name"><i class="fas fa-user"></i> الاسم الكامل</label>
-                <input type="text" id="name" required>
-                <span class="error-message">يجب إدخال الاسم</span>
-            </div>
-
-            <div class="input-group">
-                <label for="country"><i class="fas fa-globe"></i> الدولة</label>
-                <div class="custom-select">
-                    <select id="country" required>
-                        <option value="">اختر دولتك</option>
-                    </select>
-                    <span class="custom-arrow"><i class="fas fa-chevron-down"></i></span>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label for="email"><i class="fas fa-envelope"></i> البريد الإلكتروني (اختياري)</label>
-                <input type="email" id="email">
-            </div>
-
-            <button type="submit" class="submit-btn" disabled>
-                <i class="fas fa-user-plus"></i> إنشاء الحساب
-            </button>
-        </form>
-    </div>
-
-    <script>
-        // قائمة الدول العربية مع الرموز
-        const arabCountries = [
-            "السعودية", "مصر", "الإمارات", "الجزائر", "البحرين",
-            "العراق", "الأردن", "الكويت", "لبنان", "ليبيا",
-            "المغرب", "عُمان", "فلسطين", "قطر", "السودان",
-            "سوريا", "تونس", "اليمن", "الصومال", "موريتانيا"
-        ];
-
-        // تعبئة قائمة الدول
-        const countrySelect = document.getElementById('country');
-        arabCountries.forEach(country => {
-            const option = document.createElement('option');
-            option.value = country;
-            option.textContent = country;
-            countrySelect.appendChild(option);
-        });
-
-        // التحقق من صحة الحقول
-        const form = document.getElementById('registrationForm');
-        const inputs = form.querySelectorAll('input, select');
-        const submitBtn = form.querySelector('.submit-btn');
-
-        function checkValidity() {
-            let isValid = true;
-            inputs.forEach(input => {
-                if (input.required && !input.value.trim()) {
-                    isValid = false;
-                    input.closest('.input-group').classList.add('invalid');
-                } else {
-                    input.closest('.input-group').classList.remove('invalid');
-                }
-            });
-            submitBtn.disabled = !isValid;
-        }
 <!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل مستخدم جديد - ختم القرآن</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet"><style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet"><style>
     :root {
         --primary-color: #2c5f2d;
         --secondary-color: #97bc62;
-        --background: linear-gradient(135deg, #002b4d, #004c6d);
+        --background: #f5f5f5;
     }
 
     body {
-        background: var(--background);
-        font-family: 'Amiri', serif;
+        background: linear-gradient(135deg, var(--background) 0%, #e0e0e0 100%);
+        font-family: 'Cairo', sans-serif;
         min-height: 100vh;
         display: flex;
         justify-content: center;
@@ -237,14 +22,13 @@
     }
 
     .registration-container {
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.95);
         padding: 2rem;
         border-radius: 15px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         width: 90%;
         max-width: 500px;
         backdrop-filter: blur(10px);
-        position: relative;
     }
 
     .header {
@@ -276,7 +60,7 @@
         font-weight: bold;
     }
 
-    input, select {
+    input, .custom-select {
         width: 100%;
         padding: 12px;
         border: 2px solid #ddd;
@@ -285,10 +69,15 @@
         transition: all 0.3s ease;
     }
 
-    input:focus, select:hover {
+    input:focus, .custom-select:hover {
         border-color: var(--secondary-color);
         box-shadow: 0 0 8px rgba(151, 188, 98, 0.2);
         outline: none;
+    }
+
+    .custom-select {
+        position: relative;
+        cursor: pointer;
     }
 
     .submit-btn {
@@ -307,197 +96,43 @@
         gap: 10px;
     }
 
-    .submit-btn:disabled {
-        background: #ddd;
-        cursor: not-allowed;
-        opacity: 0.7;
-    }
-
-    .submit-btn:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(44, 95, 45, 0.3);
-    }
-
-    .message-box {
-        display: none;
-        padding: 10px;
-        margin-top: 15px;
-        text-align: center;
-        border-radius: 5px;
-    }
-
-    .error-message {
-        color: #e74c3c;
-        background: rgba(231, 76, 60, 0.1);
-    }
-
-    .success-message {
-        color: #2c5f2d;
-        background: rgba(44, 95, 45, 0.1);
-    }
-</style>
-
-</head>
-<body>
-    <div class="registration-container">
-        <div class="header">
-            <i class="fas fa-quran logo"></i>
-            <h1>سجل نفسك لبدء الختمة</h1>
-        </div><form id="registrationForm">
-        <div class="input-group">
-            <label for="name"><i class="fas fa-user"></i> الاسم الكامل</label>
-            <input type="text" id="name" required>
-        </div>
-
-        <div class="input-group">
-            <label for="country"><i class="fas fa-globe"></i> الدولة</label>
-            <select id="country" required>
-                <option value="">اختر دولتك</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label for="email"><i class="fas fa-envelope"></i> البريد الإلكتروني (اختياري)</label>
-            <input type="email" id="email">
-        </div>
-
-        <div class="message-box" id="message"></div>
-
-        <button type="submit" class="submit-btn" disabled>
-            <i class="fas fa-user-plus"></i> إنشاء الحساب
-        </button>
-    </form>
-</div>
-
-<script>
-    const arabCountries = ["السعودية", "مصر", "الإمارات", "المغرب", "الأردن", "الكويت", "فلسطين", "تونس", "لبنان", "الجزائر"];
-    const countrySelect = document.getElementById('country');
-    arabCountries.forEach(country => {
-        const option = document.createElement('option');
-        option.value = country;
-        option.textContent = country;
-        countrySelect.appendChild(option);
-    });
-
-    const form = document.getElementById('registrationForm');
-    const inputs = form.querySelectorAll('input, select');
-    const submitBtn = form.querySelector('.submit-btn');
-    const messageBox = document.getElementById('message');
-
-    function checkValidity() {
-        let isValid = true;
-        inputs.forEach(input => {
-            if (input.required && !input.value.trim()) {
-                isValid = false;
-            }
-        });
-<!DOCTYPE html><html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل مستخدم جديد - عاهدتُ القرآن</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #16a085;
-            --background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            --text-color: #ecf0f1;
-        }body {
-        background: var(--background);
-        font-family: 'Amiri', serif;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-        color: var(--text-color);
-    }
-
-    .registration-container {
-        background: rgba(255, 255, 255, 0.1);
+    .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        background: white;
         padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        width: 90%;
-        max-width: 500px;
-        backdrop-filter: blur(10px);
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         text-align: center;
+        transition: transform 0.3s ease;
+        z-index: 1000;
     }
 
-    .header {
-        margin-bottom: 1.5rem;
+    .popup img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 1rem;
     }
 
-    .logo {
-        font-size: 3rem;
-        color: var(--secondary-color);
-        animation: pulse 2s infinite;
+    .popup.show {
+        transform: translate(-50%, -50%) scale(1);
     }
 
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-    }
-
-    .input-group {
-        margin-bottom: 1.5rem;
-        text-align: right;
-        position: relative;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: bold;
-    }
-
-    input, select {
-        width: 100%;
-        padding: 12px;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        font-size: 16px;
-        background: rgba(255, 255, 255, 0.2);
-        color: var(--text-color);
-    }
-
-    input:focus, select:focus {
-        border-color: var(--secondary-color);
-        outline: none;
-    }
-
-    .submit-btn {
-        width: 100%;
-        padding: 15px;
-        background: var(--secondary-color);
+    .popup button {
+        margin-top: 1rem;
+        padding: 10px 20px;
+        background: var(--primary-color);
         color: white;
         border: none;
-        border-radius: 8px;
-        font-size: 18px;
+        border-radius: 5px;
         cursor: pointer;
         transition: 0.3s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
     }
 
-    .submit-btn:disabled {
-        background: #555;
-        cursor: not-allowed;
-    }
-
-    .submit-btn:hover:not(:disabled) {
-        transform: scale(1.05);
-    }
-
-    .error-message {
-        color: #e74c3c;
-        font-size: 14px;
-        margin-top: 5px;
-        display: none;
+    .popup button:hover {
+        background: var(--secondary-color);
     }
 </style>
 
@@ -511,7 +146,6 @@
         <div class="input-group">
             <label for="name">الاسم الكامل</label>
             <input type="text" id="name" required>
-            <span class="error-message">يجب إدخال الاسم</span>
         </div>
 
         <div class="input-group">
@@ -519,66 +153,45 @@
             <select id="country" required>
                 <option value="">اختر دولتك</option>
             </select>
-            <span class="error-message">يجب اختيار الدولة</span>
         </div>
 
         <div class="input-group">
-            <label for="email">البريد الإلكتروني (اختياري)</label>
-            <input type="email" id="email">
+            <label for="gender">الجنس</label>
+            <select id="gender" required>
+                <option value="">اختر الجنس</option>
+                <option value="male">ذكر</option>
+                <option value="female">أنثى</option>
+            </select>
         </div>
 
-        <button type="submit" class="submit-btn" disabled>
-            <i class="fas fa-user-plus"></i> إنشاء الحساب
-        </button>
+        <button type="submit" class="submit-btn" disabled>إنشاء الحساب</button>
     </form>
 </div>
 
+<div class="popup" id="confirmationPopup">
+    <img id="genderIcon" src="" alt="Gender Icon">
+    <p id="popupText"></p>
+    <button onclick="closePopup()">تأكيد</button>
+</div>
+
 <script>
-    const arabCountries = [
-        "السعودية", "مصر", "الإمارات", "الجزائر", "البحرين",
-        "العراق", "الأردن", "الكويت", "لبنان", "ليبيا",
-        "المغرب", "عُمان", "فلسطين", "قطر", "السودان",
-        "سوريا", "تونس", "اليمن", "الصومال", "موريتانيا"
-    ];
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        let name = document.getElementById('name').value;
+        let country = document.getElementById('country').value;
+        let gender = document.getElementById('gender').value;
+        let date = new Date().toLocaleDateString();
 
-    const countrySelect = document.getElementById('country');
-    arabCountries.forEach(country => {
-        const option = document.createElement('option');
-        option.value = country;
-        option.textContent = country;
-        countrySelect.appendChild(option);
+        let genderIcon = gender === 'male' ? 'https://cdn-icons-png.flaticon.com/512/11870/11870989.png' : 'https://cdn-icons-png.flaticon.com/512/12613/12613532.png';
+        
+        document.getElementById('genderIcon').src = genderIcon;
+        document.getElementById('popupText').innerHTML = `الاسم: ${name} <br> الدولة: ${country} <br> تاريخ التسجيل: ${date}`;
+        document.getElementById('confirmationPopup').classList.add('show');
     });
 
-    const form = document.getElementById('registrationForm');
-    const inputs = form.querySelectorAll('input, select');
-    const submitBtn = form.querySelector('.submit-btn');
-
-    function checkValidity() {
-        let isValid = true;
-        inputs.forEach(input => {
-            if (input.required && !input.value.trim()) {
-                isValid = false;
-                input.closest('.input-group').classList.add('invalid');
-            } else {
-                input.closest('.input-group').classList.remove('invalid');
-            }
-        });
-        submitBtn.disabled = !isValid;
+    function closePopup() {
+        document.getElementById('confirmationPopup').classList.remove('show');
     }
-
-    inputs.forEach(input => {
-        input.addEventListener('input', checkValidity);
-        input.addEventListener('change', checkValidity);
-    });
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        console.log('تم التسجيل بنجاح!');
-        form.reset();
-        submitBtn.disabled = true;
-    });
-
-    checkValidity();
 </script>
 
 </body>
