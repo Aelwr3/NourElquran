@@ -1,198 +1,305 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل مستخدم جديد - ختم القرآن</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet"><style>
-    :root {
-        --primary-color: #2c5f2d;
-        --secondary-color: #97bc62;
-        --background: #f5f5f5;
-    }
+    <title>التسجيل - عاهدت القرآن</title>
+    
+    <!-- الروابط الضرورية -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        /* الأنماط العامة (مُحدثة) */
+        :root {
+            --primary-color: #2A5B87;
+            --accent-color: #E8B647;
+            --error-color: #ff4757;
+        }
 
-    body {
-        background: linear-gradient(135deg, var(--background) 0%, #e0e0e0 100%);
-        font-family: 'Cairo', sans-serif;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-    }
+        body {
+            background: #f8fafc;
+            min-height: 100vh;
+            font-family: 'Amiri', serif;
+        }
 
-    .registration-container {
-        background: rgba(255, 255, 255, 0.95);
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        width: 90%;
-        max-width: 500px;
-        backdrop-filter: blur(10px);
-    }
+        /* الشريط العلوي */
+        .header {
+            background: var(--primary-color);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
 
-    .header {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
+        .back-btn {
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-    .logo {
-        font-size: 3rem;
-        color: var(--primary-color);
-        margin-bottom: 1rem;
-        animation: pulse 2s infinite;
-    }
+        .back-btn:hover {
+            transform: translateX(-5px);
+        }
 
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-    }
+        /* النموذج */
+        .registration-form {
+            max-width: 500px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            animation: slideInDown 0.8s;
+        }
 
-    .input-group {
-        margin-bottom: 1.5rem;
-        position: relative;
-    }
+        .form-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-    label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: var(--primary-color);
-        font-weight: bold;
-    }
+        /* حقل الإدخال */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
 
-    input, .custom-select {
-        width: 100%;
-        padding: 12px;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        font-size: 16px;
-        transition: all 0.3s ease;
-    }
+        input, .custom-dropdown {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
 
-    input:focus, .custom-select:hover {
-        border-color: var(--secondary-color);
-        box-shadow: 0 0 8px rgba(151, 188, 98, 0.2);
-        outline: none;
-    }
+        input:focus, .custom-dropdown.active {
+            border-color: var(--primary-color);
+            outline: none;
+        }
 
-    .custom-select {
-        position: relative;
-        cursor: pointer;
-    }
+        /* قائمة الدول المخصصة */
+        .custom-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
 
-    .submit-btn {
-        width: 100%;
-        padding: 15px;
-        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 18px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
+        .dropdown-list {
+            display: none;
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            z-index: 100;
+            top: 110%;
+        }
 
-    .popup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        background: white;
-        padding: 2rem;
-        border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        text-align: center;
-        transition: transform 0.3s ease;
-        z-index: 1000;
-    }
+        .dropdown-item {
+            padding: 1rem;
+            transition: 0.3s;
+        }
 
-    .popup img {
-        width: 100px;
-        height: 100px;
-        margin-bottom: 1rem;
-    }
+        .dropdown-item:hover {
+            background: #f8fafc;
+        }
 
-    .popup.show {
-        transform: translate(-50%, -50%) scale(1);
-    }
+        /* أيقونات الجنس */
+        .gender-selection {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
 
-    .popup button {
-        margin-top: 1rem;
-        padding: 10px 20px;
-        background: var(--primary-color);
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
+        .gender-option {
+            cursor: pointer;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
 
-    .popup button:hover {
-        background: var(--secondary-color);
-    }
-</style>
+        .gender-option.selected {
+            opacity: 1;
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 10px var(--accent-color));
+        }
 
+        .gender-icon {
+            width: 80px;
+            height: 80px;
+        }
+
+        /* زر التسجيل */
+        #registerBtn {
+            background: linear-gradient(45deg, var(--primary-color), #3875a3);
+            color: white;
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: not-allowed;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        #registerBtn.active {
+            cursor: pointer;
+            opacity: 1;
+            box-shadow: 0 5px 15px rgba(42, 91, 135, 0.3);
+        }
+
+        /* الأنيميشنات */
+        @keyframes slideInDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-    <div class="registration-container">
-        <div class="header">
-            <i class="fas fa-quran logo"></i>
-            <h1>سجل نفسك لبدء الختمة</h1>
-        </div><form id="registrationForm">
+    <!-- الشريط العلوي -->
+    <div class="header">
+        <i class="fas fa-arrow-right back-btn" onclick="window.location.href='welcome.html'"></i>
+        <h2 style="color: white;">سجل الآن وابدأ رحلتك</h2>
+    </div>
+
+    <!-- نموذج التسجيل -->
+    <div class="registration-form">
+        <h1 class="form-title">📝 بيانات التسجيل</h1>
+
+        <!-- حقل الاسم -->
         <div class="input-group">
-            <label for="name">الاسم الكامل</label>
-            <input type="text" id="name" required>
+            <input type="text" id="username" placeholder="أدخل اسمك الكامل" oninput="validateForm()">
+            <small class="error-msg" id="nameError"></small>
         </div>
 
+        <!-- قائمة الدول -->
         <div class="input-group">
-            <label for="country">الدولة</label>
-            <select id="country" required>
-                <option value="">اختر دولتك</option>
-            </select>
+            <div class="custom-dropdown" onclick="toggleDropdown()">
+                <div class="selected-item">اختر دولتك</div>
+                <div class="dropdown-list" id="countryList">
+                    <!-- الدول تُضاف عبر الجافاسكريبت -->
+                </div>
+            </div>
         </div>
 
-        <div class="input-group">
-            <label for="gender">الجنس</label>
-            <select id="gender" required>
-                <option value="">اختر الجنس</option>
-                <option value="male">ذكر</option>
-                <option value="female">أنثى</option>
-            </select>
+        <!-- اختيار الجنس -->
+        <div class="gender-selection">
+            <div class="gender-option" onclick="selectGender('male')">
+                <img src="https://cdn-icons-png.flaticon.com/512/1187/1187522.png" class="gender-icon" alt="ذكر">
+            </div>
+            <div class="gender-option" onclick="selectGender('female')">
+                <img src="https://cdn-icons-png.flaticon.com/512/1187/1187530.png" class="gender-icon" alt="أنثى">
+            </div>
         </div>
 
-        <button type="submit" class="submit-btn" disabled>إنشاء الحساب</button>
-    </form>
-</div>
+        <!-- زر التسجيل -->
+        <button id="registerBtn" onclick="registerUser()">تسجيل الحساب</button>
+    </div>
 
-<div class="popup" id="confirmationPopup">
-    <img id="genderIcon" src="" alt="Gender Icon">
-    <p id="popupText"></p>
-    <button onclick="closePopup()">تأكيد</button>
-</div>
+    <!-- المكتبات -->
+    <script src="https://kit.fontawesome.com/your-kit-code.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // بيانات الدول
+        const arabCountries = [
+            "السعودية", "مصر", "الإمارات", "الكويت", 
+            "الأردن", "الجزائر", "المغرب", "العراق",
+            "قطر", "عُمان"
+        ];
 
-<script>
-    document.getElementById('registrationForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        let name = document.getElementById('name').value;
-        let country = document.getElementById('country').value;
-        let gender = document.getElementById('gender').value;
-        let date = new Date().toLocaleDateString();
+        // تهيئة القائمة المنسدلة
+        function initDropdown() {
+            const list = document.getElementById('countryList');
+            arabCountries.forEach(country => {
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                item.textContent = country;
+                item.onclick = () => selectCountry(country);
+                list.appendChild(item);
+            });
+        }
 
-        let genderIcon = gender === 'male' ? 'https://cdn-icons-png.flaticon.com/512/11870/11870989.png' : 'https://cdn-icons-png.flaticon.com/512/12613/12613532.png';
-        
-        document.getElementById('genderIcon').src = genderIcon;
-        document.getElementById('popupText').innerHTML = `الاسم: ${name} <br> الدولة: ${country} <br> تاريخ التسجيل: ${date}`;
-        document.getElementById('confirmationPopup').classList.add('show');
-    });
+        // اختيار الدولة
+        let selectedCountry = '';
+        function selectCountry(country) {
+            selectedCountry = country;
+            document.querySelector('.selected-item').textContent = country;
+            validateForm();
+        }
 
-    function closePopup() {
-        document.getElementById('confirmationPopup').classList.remove('show');
-    }
-</script>
+        // تبديل ظهور القائمة
+        function toggleDropdown() {
+            const list = document.querySelector('.dropdown-list');
+            list.style.display = list.style.display === 'block' ? 'none' : 'block';
+        }
 
+        // اختيار الجنس
+        let selectedGender = '';
+        function selectGender(gender) {
+            selectedGender = gender;
+            document.querySelectorAll('.gender-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            event.target.closest('.gender-option').classList.add('selected');
+            validateForm();
+        }
+
+        // التحقق من صحة النموذج
+        function validateForm() {
+            const name = document.getElementById('username').value;
+            const nameValid = /^[\u0600-\u06FF\s]+$/.test(name); // يتأكد من أحرف عربية فقط
+            const allFilled = nameValid && selectedCountry && selectedGender;
+
+            document.getElementById('registerBtn').disabled = !allFilled;
+            document.getElementById('registerBtn').classList.toggle('active', allFilled);
+        }
+
+        // تسجيل المستخدم
+        function registerUser() {
+            const userData = {
+                name: document.getElementById('username').value,
+                country: selectedCountry,
+                gender: selectedGender,
+                joinDate: new Date().toLocaleDateString('ar-EG')
+            };
+
+            // حفظ البيانات في localStorage
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+
+            // إظهار نافذة التأكيد
+            Swal.fire({
+                title: 'مرحبا ' + userData.name + '!',
+                html: `
+                    <div style="text-align: right;">
+                        <img src="${userData.gender === 'male' ? 
+                            'https://cdn-icons-png.flaticon.com/512/1187/1187522.png' : 
+                            'https://cdn-icons-png.flaticon.com/512/1187/1187530.png'}" 
+                            width="80" style="margin: 10px;">
+                        <p>الدولة: ${userData.country}</p>
+                        <p>تاريخ التسجيل: ${userData.joinDate}</p>
+                    </div>
+                `,
+                confirmButtonText: 'ابدأ التلاوة →',
+                background: '#f8fafc',
+                color: '#2A5B87',
+                confirmButtonColor: var(--accent-color)
+            }).then(() => {
+                window.location.href = 'dashboard.html';
+            });
+        }
+
+        // تهيئة الصفحة
+        initDropdown();
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.custom-dropdown')) {
+                document.querySelector('.dropdown-list').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
