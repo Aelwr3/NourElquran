@@ -5,101 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم - عاهدت القرآن</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2A5B87;
-            --accent-color: #E8B647;
-            --bg-color: #f8fafc;
+            --primary: #2A5B87;
+            --accent: #E8B647;
+            --bg: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            background: var(--bg-color);
-            font-family: 'Amiri', serif;
-            margin: 0;
+            font-family: 'Amiri', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
         }
 
-        /* الشريط العلوي */
-        .dashboard-header {
-            background: var(--primary-color);
+        /* تخطيط الشبكة الرئيسي */
+        .dashboard-grid {
+            display: grid;
+            grid-template-areas:
+                "header"
+                "main";
+            grid-template-rows: auto 1fr;
+            min-height: 100vh;
+        }
+
+        /* الهيدر */
+        .header {
+            grid-area: header;
+            background: var(--primary);
             padding: 1rem;
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
             align-items: center;
+            gap: 1rem;
             color: white;
         }
 
         .header-icons {
-            display: flex;
-            gap: 20px;
+            display: grid;
+            grid-auto-flow: column;
+            gap: 1.5rem;
         }
 
-        .icon-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .icon-btn:hover {
-            transform: scale(1.1);
+        /* المحتوى الرئيسي */
+        .main-content {
+            grid-area: main;
+            padding: 2rem;
+            display: grid;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         /* بطاقة التقدم */
         .progress-card {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 2rem;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .progress-bar {
-            width: 100%;
             height: 20px;
             background: #eee;
             border-radius: 10px;
             overflow: hidden;
+            margin-top: 1rem;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            transition: 0.5s;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.5s ease;
         }
 
-        /* جدول السور */
+        /* شبكة السور */
         .surah-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 10px;
-            margin: 2rem 0;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.5rem;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 1rem 0;
         }
 
         .surah-item {
-            padding: 1rem;
             background: white;
             border: 2px solid #ddd;
-            border-radius: 10px;
+            border-radius: 8px;
+            padding: 1rem;
             text-align: center;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.2s;
         }
 
         .surah-item.completed {
             background: #e8f5e9;
-            border-color: var(--primary-color);
+            border-color: var(--primary);
+            transform: scale(0.95);
         }
 
-        /* زر الإشعارات */
-        .notifications-btn {
+        /* الإشعارات */
+        .notification-badge {
             position: relative;
         }
 
-        .notifications-badge {
+        .badge-count {
             position: absolute;
             top: -8px;
             right: -8px;
@@ -109,42 +127,77 @@
             padding: 2px 8px;
             font-size: 0.8rem;
         }
+
+        /* الأزرار */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* تصميم الجوال */
+        @media (max-width: 768px) {
+            .surah-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+                gap: 0.3rem;
+            }
+
+            .surah-item {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <header class="dashboard-header">
-        <button class="icon-btn" onclick="window.location.href='welcome.html'">
-            <i class="fas fa-home"></i>
-        </button>
-        <h2>مرحبًا، <span id="username"></span></h2>
-        <div class="header-icons">
-            <button class="icon-btn notifications-btn" onclick="window.location.href='notifications.html'">
-                <i class="fas fa-bell"></i>
-                <span class="notifications-badge" id="notificationCount">0</span>
+    <div class="dashboard-grid">
+        <header class="header">
+            <button onclick="window.history.back()">
+                <i class="fas fa-arrow-left" style="color: white; font-size: 1.5rem;"></i>
             </button>
-            <button class="icon-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
-        </div>
-    </header>
+            <h2>مرحبًا، <span id="username"></span></h2>
+            <div class="header-icons">
+                <button class="notification-badge" onclick="window.location.href='notifications.html'">
+                    <i class="fas fa-bell" style="color: white; font-size: 1.5rem;"></i>
+                    <span class="badge-count" id="notificationCount">0</span>
+                </button>
+                <button onclick="logout()">
+                    <i class="fas fa-sign-out-alt" style="color: white; font-size: 1.5rem;"></i>
+                </button>
+            </div>
+        </header>
 
-    <div class="progress-card">
-        <h3>تقدمك في الختمة 🎯</h3>
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-        </div>
-        <p id="progressText" style="text-align: center; margin-top: 1rem;"></p>
+        <main class="main-content">
+            <div class="progress-card">
+                <h3>📊 تقدمك في الختمة</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="progressText" class="text-center" style="margin-top: 1rem;"></p>
+            </div>
+
+            <div class="progress-card">
+                <div style="display: grid; grid-template-columns: 1fr auto; align-items: center; margin-bottom: 1rem;">
+                    <h3>🎯 سور القرآن الكريم</h3>
+                    <button class="btn" onclick="resetProgress()">إعادة الضبط</button>
+                </div>
+                <div class="surah-grid" id="surahGrid"></div>
+            </div>
+        </main>
     </div>
 
-    <div class="progress-card">
-        <h3>سور القرآن الكريم 📖</h3>
-        <div class="surah-grid" id="surahGrid"></div>
-        <button onclick="resetProgress()" style="width: 100%; margin-top: 1rem;">
-            إعادة الضبط
-        </button>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // بيانات المستخدم
         let user = JSON.parse(localStorage.getItem('currentUser')) || {};
@@ -152,24 +205,25 @@
 
         // تهيئة الصفحة
         function initDashboard() {
-            document.getElementById('username').textContent = user.name;
+            // تحميل البيانات
+            document.getElementById('username').textContent = user.name || 'ضيف';
             updateProgress();
             loadSurahs();
-            checkNotifications();
-            setInterval(checkActivity, 1000 * 60); // التحقق كل دقيقة
+            updateNotifications();
+            setInterval(checkActivity, 1000 * 60); // تحقق كل دقيقة
         }
 
-        // تحميل سور القرآن
+        // توليد سور القرآن
         function loadSurahs() {
             const surahGrid = document.getElementById('surahGrid');
             surahGrid.innerHTML = '';
             
             for (let i = 1; i <= 114; i++) {
-                const surahDiv = document.createElement('div');
-                surahDiv.className = `surah-item ${user.progress?.completedSurahs?.includes(i) ? 'completed' : ''}`;
-                surahDiv.textContent = i;
-                surahDiv.onclick = () => toggleSurah(i);
-                surahGrid.appendChild(surahDiv);
+                const btn = document.createElement('button');
+                btn.className = `surah-item ${user.progress?.completedSurahs?.includes(i) ? 'completed' : ''}`;
+                btn.textContent = i;
+                btn.onclick = () => toggleSurah(i);
+                surahGrid.appendChild(btn);
             }
         }
 
@@ -180,25 +234,26 @@
             const index = user.progress.completedSurahs.indexOf(num);
             if (index === -1) {
                 user.progress.completedSurahs.push(num);
-                addNotification(`أحسنت! لقد أكملت سورة ${getSurahName(num)}`);
+                addNotification(`🎉 أحسنت! أكملت سورة ${getSurahName(num)}`);
             } else {
                 user.progress.completedSurahs.splice(index, 1);
             }
             
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            saveData();
             loadSurahs();
             updateProgress();
         }
 
-        // تحديث شريط التقدم
+        // تحديث التقدم
         function updateProgress() {
             const total = 114;
             const completed = user.progress?.completedSurahs?.length || 0;
-            const percent = ((completed / total) * 100).toFixed(1);
+            const percent = (completed / total * 100).toFixed(1);
             
             document.getElementById('progressFill').style.width = `${percent}%`;
             document.getElementById('progressText').innerHTML = `
-                أكملت <strong>${completed}</strong> سورة من أصل ${total} (${percent}%)
+                <span style="color: var(--primary); font-weight: bold;">${completed}</span> سورة مكتملة
+                <span style="color: #666;">(${percent}%)</span>
             `;
         }
 
@@ -209,12 +264,11 @@
                 date: new Date().toLocaleString('ar-EG'),
                 read: false
             });
-            
-            localStorage.setItem('notifications', JSON.stringify(notifications));
-            updateNotificationBadge();
+            saveData();
+            updateNotifications();
         }
 
-        function updateNotificationBadge() {
+        function updateNotifications() {
             const unread = notifications.filter(n => !n.read).length;
             document.getElementById('notificationCount').textContent = unread;
         }
@@ -225,30 +279,27 @@
             const hoursInactive = (Date.now() - lastActive) / (1000 * 3600);
             
             if (hoursInactive > 24) {
-                addNotification('⏰ مر أكثر من 24 ساعة على آخر تلاوة! واصل مسيرتك.');
+                addNotification('⏰ مر أكثر من 24 ساعة على آخر تلاوة!');
             }
             
             user.lastActivity = new Date().toISOString();
+            saveData();
+        }
+
+        // حفظ البيانات
+        function saveData() {
             localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('notifications', JSON.stringify(notifications));
         }
 
         // إعادة الضبط
         function resetProgress() {
-            Swal.fire({
-                title: 'هل أنت متأكد؟',
-                text: 'سيتم حذف كل تقدمك الحالي!',
-                icon: 'warning',
-                confirmButtonColor: var(--accent-color),
-                confirmButtonText: 'نعم، أعد الضبط',
-                cancelButtonText: 'إلغاء'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    user.progress = { completedSurahs: [] };
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    loadSurahs();
-                    updateProgress();
-                }
-            });
+            if (confirm('⚠️ هل تريد حقًا حذف كل التقدم؟')) {
+                user.progress = { completedSurahs: [] };
+                saveData();
+                loadSurahs();
+                updateProgress();
+            }
         }
 
         // تسجيل الخروج
@@ -261,4 +312,4 @@
         initDashboard();
     </script>
 </body>
-          </html>
+</html>
