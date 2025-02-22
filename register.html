@@ -8,9 +8,8 @@
     <!-- الروابط الضرورية -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* الأنماط العامة (مُحدثة) */
         :root {
             --primary-color: #2A5B87;
             --accent-color: #E8B647;
@@ -23,7 +22,6 @@
             font-family: 'Amiri', serif;
         }
 
-        /* الشريط العلوي */
         .header {
             background: var(--primary-color);
             padding: 1rem;
@@ -44,7 +42,6 @@
             transform: translateX(-5px);
         }
 
-        /* النموذج */
         .registration-form {
             max-width: 500px;
             margin: 3rem auto;
@@ -61,7 +58,6 @@
             margin-bottom: 2rem;
         }
 
-        /* حقل الإدخال */
         .input-group {
             margin-bottom: 1.5rem;
         }
@@ -80,7 +76,6 @@
             outline: none;
         }
 
-        /* قائمة الدول المخصصة */
         .custom-dropdown {
             position: relative;
             cursor: pointer;
@@ -108,7 +103,6 @@
             background: #f8fafc;
         }
 
-        /* أيقونات الجنس */
         .gender-selection {
             display: flex;
             gap: 2rem;
@@ -129,11 +123,11 @@
         }
 
         .gender-icon {
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
         }
 
-        /* زر التسجيل */
         #registerBtn {
             background: linear-gradient(45deg, var(--primary-color), #3875a3);
             color: white;
@@ -153,7 +147,6 @@
             box-shadow: 0 5px 15px rgba(42, 91, 135, 0.3);
         }
 
-        /* الأنيميشنات */
         @keyframes slideInDown {
             from { transform: translateY(-50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -161,58 +154,55 @@
     </style>
 </head>
 <body>
-    <!-- الشريط العلوي -->
     <div class="header">
-        <i class="fas fa-arrow-right back-btn" onclick="window.location.href='welcome.html'"></i>
+        <i class="fa-solid fa-arrow-right back-btn" onclick="window.location.href='welcome.html'"></i>
         <h2 style="color: white;">سجل الآن وابدأ رحلتك</h2>
     </div>
 
-    <!-- نموذج التسجيل -->
     <div class="registration-form">
         <h1 class="form-title">📝 بيانات التسجيل</h1>
 
-        <!-- حقل الاسم -->
         <div class="input-group">
             <input type="text" id="username" placeholder="أدخل اسمك الكامل" oninput="validateForm()">
             <small class="error-msg" id="nameError"></small>
         </div>
 
-        <!-- قائمة الدول -->
         <div class="input-group">
             <div class="custom-dropdown" onclick="toggleDropdown()">
                 <div class="selected-item">اختر دولتك</div>
-                <div class="dropdown-list" id="countryList">
-                    <!-- الدول تُضاف عبر الجافاسكريبت -->
-                </div>
+                <div class="dropdown-list" id="countryList"></div>
             </div>
         </div>
 
-        <!-- اختيار الجنس -->
         <div class="gender-selection">
-            <div class="gender-option" onclick="selectGender('male')">
-                <img src="https://cdn-icons-png.flaticon.com/512/1187/1187522.png" class="gender-icon" alt="ذكر">
-            </div>
             <div class="gender-option" onclick="selectGender('female')">
-                <img src="https://cdn-icons-png.flaticon.com/512/1187/1187530.png" class="gender-icon" alt="أنثى">
+                <img src="https://cdn-icons-png.flaticon.com/512/12613/12613532.png" 
+                     class="gender-icon" 
+                     alt="أنثى"
+                     id="femaleIcon">
+            </div>
+            <div class="gender-option" onclick="selectGender('male')">
+                <img src="https://cdn-icons-png.flaticon.com/512/11870/11870989.png" 
+                     class="gender-icon" 
+                     alt="ذكر"
+                     id="maleIcon">
             </div>
         </div>
 
-        <!-- زر التسجيل -->
         <button id="registerBtn" onclick="registerUser()">تسجيل الحساب</button>
     </div>
 
-    <!-- المكتبات -->
-    <script src="https://kit.fontawesome.com/your-kit-code.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // بيانات الدول
         const arabCountries = [
             "السعودية", "مصر", "الإمارات", "الكويت", 
             "الأردن", "الجزائر", "المغرب", "العراق",
             "قطر", "عُمان"
         ];
 
-        // تهيئة القائمة المنسدلة
+        let selectedCountry = '';
+        let selectedGender = '';
+
         function initDropdown() {
             const list = document.getElementById('countryList');
             arabCountries.forEach(country => {
@@ -224,22 +214,18 @@
             });
         }
 
-        // اختيار الدولة
-        let selectedCountry = '';
         function selectCountry(country) {
             selectedCountry = country;
             document.querySelector('.selected-item').textContent = country;
             validateForm();
+            toggleDropdown();
         }
 
-        // تبديل ظهور القائمة
         function toggleDropdown() {
             const list = document.querySelector('.dropdown-list');
             list.style.display = list.style.display === 'block' ? 'none' : 'block';
         }
 
-        // اختيار الجنس
-        let selectedGender = '';
         function selectGender(gender) {
             selectedGender = gender;
             document.querySelectorAll('.gender-option').forEach(opt => {
@@ -249,37 +235,47 @@
             validateForm();
         }
 
-        // التحقق من صحة النموذج
         function validateForm() {
-            const name = document.getElementById('username').value;
-            const nameValid = /^[\u0600-\u06FF\s]+$/.test(name); // يتأكد من أحرف عربية فقط
+            const name = document.getElementById('username').value.trim();
+            const nameValid = /^[\u0600-\u06FF\s]+$/.test(name);
             const allFilled = nameValid && selectedCountry && selectedGender;
 
-            document.getElementById('registerBtn').disabled = !allFilled;
-            document.getElementById('registerBtn').classList.toggle('active', allFilled);
+            const registerBtn = document.getElementById('registerBtn');
+            registerBtn.disabled = !allFilled;
+            registerBtn.classList.toggle('active', allFilled);
         }
 
-        // تسجيل المستخدم
         function registerUser() {
+            if (!selectedGender || !selectedCountry) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'بيانات ناقصة!',
+                    text: 'الرجاء اختيار الجنس والدولة'
+                });
+                return;
+            }
+
             const userData = {
-                name: document.getElementById('username').value,
+                name: document.getElementById('username').value.trim(),
                 country: selectedCountry,
                 gender: selectedGender,
-                joinDate: new Date().toLocaleDateString('ar-EG')
+                joinDate: new Date().toLocaleDateString('ar-EG', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                })
             };
 
-            // حفظ البيانات في localStorage
             localStorage.setItem('currentUser', JSON.stringify(userData));
 
-            // إظهار نافذة التأكيد
             Swal.fire({
-                title: 'مرحبا ' + userData.name + '!',
+                title: `مرحبا ${userData.name}!`,
                 html: `
-                    <div style="text-align: right;">
+                    <div style="text-align:center;">
                         <img src="${userData.gender === 'male' ? 
-                            'https://cdn-icons-png.flaticon.com/512/1187/1187522.png' : 
-                            'https://cdn-icons-png.flaticon.com/512/1187/1187530.png'}" 
-                            width="80" style="margin: 10px;">
+                            'https://cdn-icons-png.flaticon.com/512/11870/11870989.png' : 
+                            'https://cdn-icons-png.flaticon.com/512/12613/12613532.png'}" 
+                            width="120" style="margin:10px;">
                         <p>الدولة: ${userData.country}</p>
                         <p>تاريخ التسجيل: ${userData.joinDate}</p>
                     </div>
@@ -287,19 +283,19 @@
                 confirmButtonText: 'ابدأ التلاوة →',
                 background: '#f8fafc',
                 color: '#2A5B87',
-                confirmButtonColor: var(--accent-color)
+                confirmButtonColor: '#E8B647'
             }).then(() => {
                 window.location.href = 'dashboard.html';
             });
         }
 
-        // تهيئة الصفحة
-        initDropdown();
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.custom-dropdown')) {
                 document.querySelector('.dropdown-list').style.display = 'none';
             }
         });
+
+        initDropdown();
     </script>
 </body>
 </html>
