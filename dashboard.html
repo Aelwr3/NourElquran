@@ -25,19 +25,17 @@
             min-height: 100vh;
         }
 
-        /* تخطيط الشبكة الرئيسي */
-        .dashboard-grid {
+        /* التخطيط الرئيسي */
+        .dashboard-container {
             display: grid;
-            grid-template-areas:
-                "header"
-                "main";
             grid-template-rows: auto 1fr;
             min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* الهيدر */
-        .header {
-            grid-area: header;
+        .dashboard-header {
             background: var(--primary);
             padding: 1rem;
             display: grid;
@@ -45,31 +43,33 @@
             align-items: center;
             gap: 1rem;
             color: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
 
-        .header-icons {
+        .header-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .header-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* الإحصائيات */
+        .stats-grid {
             display: grid;
-            grid-auto-flow: column;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
-        }
-
-        /* المحتوى الرئيسي */
-        .main-content {
-            grid-area: main;
             padding: 2rem;
-            display: grid;
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
         }
 
-        /* بطاقة التقدم */
-        .progress-card {
+        .stat-card {
             background: white;
-            padding: 2rem;
             border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
         .progress-bar {
@@ -77,7 +77,7 @@
             background: #eee;
             border-radius: 10px;
             overflow: hidden;
-            margin-top: 1rem;
+            margin: 1rem 0;
         }
 
         .progress-fill {
@@ -86,30 +86,42 @@
             transition: width 0.5s ease;
         }
 
-        /* شبكة السور */
+        /* جدول السور */
         .surah-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 0.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.8rem;
+            padding: 2rem;
             max-height: 60vh;
             overflow-y: auto;
-            padding: 1rem 0;
         }
 
         .surah-item {
             background: white;
             border: 2px solid #ddd;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 1rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
+            display: grid;
+            gap: 0.5rem;
         }
 
         .surah-item.completed {
             background: #e8f5e9;
             border-color: var(--primary);
-            transform: scale(0.95);
+            transform: scale(0.98);
+        }
+
+        .surah-number {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .surah-name {
+            font-size: 0.9em;
+            color: #666;
         }
 
         /* الإشعارات */
@@ -121,7 +133,7 @@
             position: absolute;
             top: -8px;
             right: -8px;
-            background: red;
+            background: #ff4757;
             color: white;
             border-radius: 50%;
             padding: 2px 8px;
@@ -136,105 +148,112 @@
             padding: 0.8rem 1.5rem;
             border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+            margin: 1rem auto;
+            display: block;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-        }
-
-        /* تصميم الجوال */
-        @media (max-width: 768px) {
-            .surah-grid {
-                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-                gap: 0.3rem;
-            }
-
-            .surah-item {
-                padding: 0.5rem;
-                font-size: 0.9rem;
-            }
-
-            .main-content {
-                padding: 1rem;
-            }
+            box-shadow: 0 3px 6px rgba(42, 91, 135, 0.3);
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-grid">
-        <header class="header">
-            <button onclick="window.history.back()">
-                <i class="fas fa-arrow-left" style="color: white; font-size: 1.5rem;"></i>
-            </button>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <i class="fas fa-arrow-left header-icon" onclick="window.location.href='index.html'"></i>
             <h2>مرحبًا، <span id="username"></span></h2>
             <div class="header-icons">
-                <button class="notification-badge" onclick="window.location.href='notifications.html'">
-                    <i class="fas fa-bell" style="color: white; font-size: 1.5rem;"></i>
+                <div class="notification-badge">
+                    <i class="fas fa-bell header-icon" onclick="window.location.href='notifications.html'"></i>
                     <span class="badge-count" id="notificationCount">0</span>
-                </button>
-                <button onclick="logout()">
-                    <i class="fas fa-sign-out-alt" style="color: white; font-size: 1.5rem;"></i>
-                </button>
+                </div>
+                <i class="fas fa-sign-out-alt header-icon" onclick="logout()"></i>
             </div>
         </header>
 
-        <main class="main-content">
-            <div class="progress-card">
-                <h3>📊 تقدمك في الختمة</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
+        <main>
+            <!-- الإحصائيات -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>📖 الصفحات اليومية</h3>
+                    <p id="dailyPages">20 صفحة</p>
                 </div>
-                <p id="progressText" class="text-center" style="margin-top: 1rem;"></p>
+                
+                <div class="stat-card">
+                    <h3>⏳ الأيام المتبقية</h3>
+                    <p id="daysLeft">28 يومًا</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>🎯 التقدم العام</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p id="progressText">0% مكتمل</p>
+                </div>
             </div>
 
-            <div class="progress-card">
-                <div style="display: grid; grid-template-columns: 1fr auto; align-items: center; margin-bottom: 1rem;">
-                    <h3>🎯 سور القرآن الكريم</h3>
-                    <button class="btn" onclick="resetProgress()">إعادة الضبط</button>
-                </div>
-                <div class="surah-grid" id="surahGrid"></div>
-            </div>
+            <!-- جدول السور -->
+            <div class="surah-grid" id="surahGrid"></div>
+
+            <button class="btn" onclick="resetProgress()">إعادة الضبط</button>
         </main>
     </div>
 
     <script>
-        // بيانات المستخدم
-        let user = JSON.parse(localStorage.getItem('currentUser')) || {};
+        // بيانات التطبيق
+        const surahNames = [
+            "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة",
+            // ... (أكمل جميع أسماء السور)
+            "الناس"
+        ];
+
+        let user = JSON.parse(localStorage.getItem('currentUser')) || {
+            name: 'ضيف',
+            progress: { completedSurahs: [] },
+            goalDays: 30,
+            startDate: new Date().toISOString()
+        };
+
         let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
 
         // تهيئة الصفحة
         function initDashboard() {
-            // تحميل البيانات
-            document.getElementById('username').textContent = user.name || 'ضيف';
-            updateProgress();
+            document.getElementById('username').textContent = user.name;
             loadSurahs();
-            updateNotifications();
-            setInterval(checkActivity, 1000 * 60); // تحقق كل دقيقة
+            updateProgress();
+            updateDailyGoals();
+            checkActivity();
+            setInterval(checkActivity, 60000); // تحقق كل دقيقة
         }
 
-        // توليد سور القرآن
+        // توليد جدول السور
         function loadSurahs() {
-            const surahGrid = document.getElementById('surahGrid');
-            surahGrid.innerHTML = '';
+            const grid = document.getElementById('surahGrid');
+            grid.innerHTML = '';
             
-            for (let i = 1; i <= 114; i++) {
-                const btn = document.createElement('button');
-                btn.className = `surah-item ${user.progress?.completedSurahs?.includes(i) ? 'completed' : ''}`;
-                btn.textContent = i;
-                btn.onclick = () => toggleSurah(i);
-                surahGrid.appendChild(btn);
-            }
+            surahNames.forEach((name, index) => {
+                const surahNumber = index + 1;
+                const div = document.createElement('div');
+                div.className = `surah-item ${user.progress.completedSurahs.includes(surahNumber) ? 'completed' : ''}`;
+                div.innerHTML = `
+                    <div class="surah-number">${surahNumber}</div>
+                    <div class="surah-name">${name}</div>
+                `;
+                div.onclick = () => toggleSurah(surahNumber);
+                grid.appendChild(div);
+            });
         }
 
         // تبديل حالة السورة
-        function toggleSurah(num) {
-            if (!user.progress) user.progress = { completedSurahs: [] };
+        function toggleSurah(number) {
+            const index = user.progress.completedSurahs.indexOf(number);
             
-            const index = user.progress.completedSurahs.indexOf(num);
             if (index === -1) {
-                user.progress.completedSurahs.push(num);
-                addNotification(`🎉 أحسنت! أكملت سورة ${getSurahName(num)}`);
+                user.progress.completedSurahs.push(number);
+                addNotification(`✅ أحسنت! أكملت سورة ${surahNames[number-1]}`);
             } else {
                 user.progress.completedSurahs.splice(index, 1);
             }
@@ -247,14 +266,22 @@
         // تحديث التقدم
         function updateProgress() {
             const total = 114;
-            const completed = user.progress?.completedSurahs?.length || 0;
-            const percent = (completed / total * 100).toFixed(1);
+            const completed = user.progress.completedSurahs.length;
+            const percent = ((completed / total) * 100).toFixed(1);
             
             document.getElementById('progressFill').style.width = `${percent}%`;
-            document.getElementById('progressText').innerHTML = `
-                <span style="color: var(--primary); font-weight: bold;">${completed}</span> سورة مكتملة
-                <span style="color: #666;">(${percent}%)</span>
-            `;
+            document.getElementById('progressText').textContent = `${percent}% مكتمل`;
+            updateNotifications();
+        }
+
+        // تحديث الأهداف اليومية
+        function updateDailyGoals() {
+            const totalPages = 604;
+            user.dailyPages = Math.ceil(totalPages / user.goalDays);
+            document.getElementById('dailyPages').textContent = `${user.dailyPages} صفحة`;
+            
+            const daysPassed = Math.floor((Date.now() - new Date(user.startDate)) / (1000 * 3600 * 24));
+            document.getElementById('daysLeft').textContent = `${user.goalDays - daysPassed} يومًا`;
         }
 
         // إدارة الإشعارات
@@ -279,23 +306,17 @@
             const hoursInactive = (Date.now() - lastActive) / (1000 * 3600);
             
             if (hoursInactive > 24) {
-                addNotification('⏰ مر أكثر من 24 ساعة على آخر تلاوة!');
+                addNotification('⏰ تأخرت عن التلاوة! اضغط لمواصلة التقدم');
             }
             
             user.lastActivity = new Date().toISOString();
             saveData();
         }
 
-        // حفظ البيانات
-        function saveData() {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            localStorage.setItem('notifications', JSON.stringify(notifications));
-        }
-
         // إعادة الضبط
         function resetProgress() {
-            if (confirm('⚠️ هل تريد حقًا حذف كل التقدم؟')) {
-                user.progress = { completedSurahs: [] };
+            if (confirm('⚠️ هل تريد حذف كل التقدم؟ سيتم فقدان جميع بياناتك!')) {
+                user.progress.completedSurahs = [];
                 saveData();
                 loadSurahs();
                 updateProgress();
@@ -305,7 +326,13 @@
         // تسجيل الخروج
         function logout() {
             localStorage.removeItem('currentUser');
-            window.location.href = 'welcome.html';
+            window.location.href = 'index.html';
+        }
+
+        // حفظ البيانات
+        function saveData() {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('notifications', JSON.stringify(notifications));
         }
 
         // بدء التشغيل
